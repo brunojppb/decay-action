@@ -1,9 +1,16 @@
-const { exec } = require("child_process");
-exec('./bin/decay_gha start "./bin/decay" 8000', (err, stdout, stderr) => {
-  if (err) {
-    console.error("Could not start server", err);
-    process.exit(1);
-  }
+const { spawn } = require("child_process");
+const { resolve } = require("path");
 
-  console.log(`decay_gha output: ${stdout}`);
+const binaryPath = resolve(__dirname, "./bin/decay_gha");
+const serverPath = resolve(__dirname, "./bin/decay");
+
+const serverProcess = spawn(binaryPath, ["start", serverPath, "8000"], {
+  detached: true,
+  stdio: "ignore",
+  env: {
+    ...process.env,
+  },
 });
+
+console.log(`Server process running with pid ${serverProcess.pid?.toString()}`);
+serverProcess.unref();

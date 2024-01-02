@@ -1,5 +1,9 @@
 const { exec } = require("child_process");
-exec("./bin/decay_gha stop", (err, stdout, stderr) => {
+const { resolve } = require("path");
+
+const binaryPath = resolve(__dirname, "./bin/decay_gha");
+
+exec(`${binaryPath} stop`, (err, stdout, stderr) => {
   if (err) {
     console.error("Could not stop server", err);
     process.exit(1);
