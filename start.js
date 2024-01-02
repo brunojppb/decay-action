@@ -12,5 +12,4 @@ const serverProcess = spawn(binaryPath, ["start", serverPath, "8000"], {
   },
 });
 
-console.log(`Server process running with pid ${serverProcess.pid?.toString()}`);
 serverProcess.unref();
